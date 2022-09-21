@@ -1,7 +1,14 @@
-import * as express from 'express';
-import { Message } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
+import "reflect-metadata"
 
-const app = express();
+import { createExpressServer } from 'routing-controllers';
+
+import { Message } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
+import { StudentController } from './app/student.controller';
+
+const app = createExpressServer({
+  controllers: [StudentController], // we specify controllers we want to use
+});
+
 
 const greeting: Message = { message: 'Welcome to api!' };
 
