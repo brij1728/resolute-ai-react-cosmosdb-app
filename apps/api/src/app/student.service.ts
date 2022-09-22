@@ -1,4 +1,5 @@
 import { validateOrReject } from 'class-validator';
+import { NotFoundError } from 'routing-controllers';
 
 import {
   Student,
@@ -7,7 +8,6 @@ import {
 
 import { COSMOS_CONTAINER_ID, COSMOS_DATABASE_ID } from './constants';
 import { cosmosDbClient } from './db';
-import { NotFoundError } from 'routing-controllers';
 
 export const queryAllStudents = async (): Promise<Student[]> => {
   const querySpec = {
@@ -57,6 +57,10 @@ export const getStudentDetails = async (id: string) => {
     .container(COSMOS_CONTAINER_ID)
     .item(id)
     .read();
+
+  if (!resource) {
+    throw new NotFoundError(`Student with id ${id} not found`);
+  }
 
   const student = Object.assign(new Student(), resource, {
     createdAt: new Date(resource.createdAt),
