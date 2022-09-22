@@ -1,30 +1,42 @@
-import { Controller, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
-import { queryContainer } from './student-db';
+import {
+  Student,
+  StudentRequest,
+} from '@resolute-ai-react-cosmosdb-app/api-interfaces';
+import {
+  Param,
+  Body,
+  Get,
+  Post,
+  Put,
+  Delete,
+  JsonController,
+} from 'routing-controllers';
+import { addStudent, queryAllStudents } from './student.service';
 
-@Controller()
+@JsonController()
 export class StudentController {
-    @Get('/api/students')
-    getAll() {
-        return queryContainer();
-    }
+  @Get('/api/students')
+  getAll(): Promise<Student[]> {
+    return queryAllStudents();
+  }
 
-    @Get('/students/:id')
-    getOne(@Param('id') id: number) {
-        return 'This action returns student #' + id;
-    }
+  @Get('/api/students/:id')
+  getOne(@Param('id') id: number) {
+    return 'This action returns student #' + id;
+  }
 
-    @Post('/students')
-    post(@Body() student: any) {
-        return 'Saving student...';
-    }
+  @Post('/api/students')
+  post(@Body({ validate: true }) studentRequest: StudentRequest): Student {
+    return addStudent(studentRequest) as never;
+  }
 
-    @Put('/students/:id')
-    put(@Param('id') id: number, @Body() student: any) {
-        return 'Updating a student...';
-    }
+  @Put('/api/students/:id')
+  put(@Param('id') id: string, @Body() studentRequest: StudentRequest) {
+    return `Updating a student... ${id} ${studentRequest}`;
+  }
 
-    @Delete('/students/:id')
-    remove(@Param('id') id: number) {
-        return 'Removing student...';
-    }
+  @Delete('/api/students/:id')
+  remove(@Param('id') id: string) {
+    return `Removing student... ${id}`;
+  }
 }
