@@ -1,17 +1,25 @@
 import {
+  Body,
+  Delete,
+  Get,
+  JsonController,
+  Param,
+  Post,
+  Put,
+} from 'routing-controllers';
+
+import {
   Student,
   StudentRequest,
 } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
+
 import {
-  Param,
-  Body,
-  Get,
-  Post,
-  Put,
-  Delete,
-  JsonController,
-} from 'routing-controllers';
-import { addStudent, queryAllStudents } from './student.service';
+  addStudent,
+  deleteStudent,
+  getStudentDetails,
+  queryAllStudents,
+  updateStudentDetails,
+} from './student.service';
 
 @JsonController()
 export class StudentController {
@@ -21,8 +29,8 @@ export class StudentController {
   }
 
   @Get('/api/students/:id')
-  getOne(@Param('id') id: number) {
-    return 'This action returns student #' + id;
+  getOne(@Param('id') id: string) {
+    return getStudentDetails(id);
   }
 
   @Post('/api/students')
@@ -31,12 +39,22 @@ export class StudentController {
   }
 
   @Put('/api/students/:id')
-  put(@Param('id') id: string, @Body() studentRequest: StudentRequest) {
-    return `Updating a student... ${id} ${studentRequest}`;
+  async put(
+    @Param('id') id: string,
+    @Body() studentRequest: Partial<StudentRequest>
+  ) {
+    const student = await getStudentDetails(id);
+    console.log(student);
+    const updatedStudent = Object.assign(
+      new Student(),
+      student,
+      studentRequest
+    );
+    return updateStudentDetails(updatedStudent) as never;
   }
 
   @Delete('/api/students/:id')
   remove(@Param('id') id: string) {
-    return `Removing student... ${id}`;
+    return deleteStudent(id);
   }
 }

@@ -1,15 +1,13 @@
-/**
- * Read the database definition
- */
+import { validateOrReject } from 'class-validator';
 
 import {
   Student,
   StudentRequest,
 } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
-import { validateOrReject } from 'class-validator';
-import { COSMOS_CONTAINER_ID, COSMOS_DATABASE_ID } from './constants';
 
+import { COSMOS_CONTAINER_ID, COSMOS_DATABASE_ID } from './constants';
 import { cosmosDbClient } from './db';
+import { NotFoundError } from 'routing-controllers';
 
 export const queryAllStudents = async (): Promise<Student[]> => {
   const querySpec = {
@@ -27,7 +25,7 @@ export const queryAllStudents = async (): Promise<Student[]> => {
 };
 
 /**
- * Create student item if it does not exist
+ * Create student
  */
 export const addStudent = async (
   studentRequest: StudentRequest
@@ -52,28 +50,54 @@ export const addStudent = async (
   return student;
 };
 
-//   /**
-//    * Replace the item by ID.
-//    */
-//   const replaceStudentItem = async (itemBody) => {
-//     console.log(`Replacing item:\n${itemBody.id}\n`);
-//     // Change property 'grade'
-//     itemBody.children[0].grade = 6;
-//     const { item } = await client
-//       .database(COSMOS_DATABASE_ID)
-//       .container(COSMOS_CONTAINER_ID)
-//       .item(itemBody.id, itemBody.partitionKey)
-//       .replace(itemBody);
-//   };
+//  get student by ID
+export const getStudentDetails = async (id: string) => {
+  const { resource } = await cosmosDbClient
+    .database(COSMOS_DATABASE_ID)
+    .container(COSMOS_CONTAINER_ID)
+    .item(id)
+    .read();
 
-//   /**
-//    * Delete the item by ID.
-//    */
-//   const deleteStudentItem = async (itemBody) => {
-//     await client
-//       .database(COSMOS_DATABASE_ID)
-//       .container(COSMOS_CONTAINER_ID)
-//       .item(itemBody.id, itemBody.partitionKey)
-//       .delete(itemBody);
-//     console.log(`Deleted item:\n${itemBody.id}\n`);
-//   };
+  const student = Object.assign(new Student(), resource, {
+    createdAt: new Date(resource.createdAt),
+    updatedAt: new Date(resource.updatedAt),
+  });
+  await validateOrReject(student);
+  return student;
+};
+
+/**
+ * Replace the item by ID.
+ */
+export const updateStudentDetails = async (
+  updatedStudent: Student
+): Promise<Student> => {
+  Object.assign(updatedStudent, { updatedAt: new Date() });
+  await validateOrReject(updatedStudent);
+
+  await cosmosDbClient
+    .database(COSMOS_DATABASE_ID)
+    .container(COSMOS_CONTAINER_ID)
+    .item(updatedStudent.id)
+    .replace(updatedStudent);
+
+  return updatedStudent;
+};
+
+/**
+ * Delete the item by ID.
+ */
+export const deleteStudent = async (id: string) => {
+  await cosmosDbClient
+    .database(COSMOS_DATABASE_ID)
+    .container(COSMOS_CONTAINER_ID)
+    .item(id)
+    .delete()
+    .catch((error) => {
+      if (error.message.includes('id does not exist in the system')) {
+        throw new NotFoundError(error.message);
+      } else {
+        throw error;
+      }
+    });
+};
