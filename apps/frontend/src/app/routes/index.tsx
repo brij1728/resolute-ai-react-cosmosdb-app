@@ -1,8 +1,7 @@
 import { AddStudentPage, ManageStudentPage } from '../pages';
+import { AppBar, SideBar } from '../components';
 import { Box, CssBaseline } from '@mui/material';
 import { Navigate, Route, Routes } from 'react-router-dom';
-
-import { AppBar } from '../components';
 
 export const RouteComponent = () => {
   return (
@@ -18,6 +17,7 @@ export const RouteComponent = () => {
         }}
       >
         <AppBar />
+        <SideBar />
         <Routes>
           <Route path="/addStudent" element={<AddStudentPage />} />
           <Route path="/manageStudent" element={<ManageStudentPage />} />

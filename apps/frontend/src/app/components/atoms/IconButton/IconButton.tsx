@@ -17,13 +17,13 @@ export const IconButton = ({ buttonName, buttonIcon, onClick }: IProps) => {
         display: 'flex',
         flexDirection: 'row',
         alignContent: 'space-between',
-        paddingLeft: '40px',
-        paddingRight: '40px',
+        paddingLeft: '30px',
+        paddingRight: '30px',
         borderColor: '#black',
       }}
       onClick={onClick}
     >
-      <Typography sx={{ paddingLeft: '30px', color: 'black' }}>
+      <Typography sx={{ paddingLeft: '20px', color: 'black' }}>
         {buttonName}
       </Typography>
     </Button>
