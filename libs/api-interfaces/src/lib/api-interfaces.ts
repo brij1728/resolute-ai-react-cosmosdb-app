@@ -3,17 +3,14 @@ export interface Message {
 }
 
 import {
-  Contains,
-  IsInt,
-  Length,
-  IsEmail,
-  IsFQDN,
   IsDate,
-  IsPositive,
-  Min,
-  Max,
   IsEnum,
+  IsInt,
+  IsPositive,
   IsUUID,
+  Length,
+  Max,
+  Min,
 } from 'class-validator';
 
 export enum StudentClass {
