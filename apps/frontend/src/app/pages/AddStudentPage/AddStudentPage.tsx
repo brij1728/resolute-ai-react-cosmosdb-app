@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const AddStudentPage = () => {
-  return <div>AddStudentPage</div>;
+  return <div></div>;
 };

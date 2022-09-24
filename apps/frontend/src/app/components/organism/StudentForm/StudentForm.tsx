@@ -35,7 +35,7 @@ export const StudentForm = () => {
     >
       {() => (
         <Form>
-          <Box sx={{ paddingLeft: 5, paddingRight: 5 }}>
+          <Box sx={{ paddingTop: 5, paddingRight: 3 }}>
             <Stack direction="row" spacing={2}>
               <Field
                 name="firstName"
@@ -164,7 +164,7 @@ export const StudentForm = () => {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
+              color="secondary"
               size="large"
             >
               Add Student
