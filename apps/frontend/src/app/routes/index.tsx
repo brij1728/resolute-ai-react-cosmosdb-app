@@ -3,6 +3,8 @@ import { AppBar, SideBar } from '../components';
 import { Box, CssBaseline } from '@mui/material';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { StudentForm } from '../components/organism/StudentForm';
+
 export const RouteComponent = () => {
   return (
     <>
@@ -18,6 +20,7 @@ export const RouteComponent = () => {
       >
         <AppBar />
         <SideBar />
+        <StudentForm />
         <Routes>
           <Route path="/addStudent" element={<AddStudentPage />} />
           <Route path="/manageStudent" element={<ManageStudentPage />} />

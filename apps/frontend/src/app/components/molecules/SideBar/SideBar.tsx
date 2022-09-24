@@ -1,6 +1,8 @@
 import { Box, Stack } from '@mui/material';
 
+import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import { IconButton } from '../../atoms';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 
 export const SideBar = () => {
@@ -14,13 +16,10 @@ export const SideBar = () => {
 
         <IconButton
           buttonName={'Manage Students'}
-          buttonIcon={<PeopleAltOutlinedIcon />}
+          buttonIcon={<BallotOutlinedIcon />}
         />
 
-        <IconButton
-          buttonName={'Logout'}
-          buttonIcon={<PeopleAltOutlinedIcon />}
-        />
+        <IconButton buttonName={'Logout'} buttonIcon={<LogoutOutlinedIcon />} />
       </Box>
     </Stack>
   );
