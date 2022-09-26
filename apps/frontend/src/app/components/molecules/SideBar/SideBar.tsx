@@ -9,7 +9,7 @@ export const SideBar = () => {
   return (
     <Box sx={{ paddingLeft: 3, paddingTop: 5, paddingRight: 3 }}>
       <Stack>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }} width="300px">
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <IconButton
             buttonName={'Add Student'}
             buttonIcon={<PeopleAltOutlinedIcon />}

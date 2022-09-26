@@ -28,6 +28,11 @@ export enum StudentClass {
   Class12 = 'Class 12',
 }
 
+export const StudentClassOptions = Object.keys(StudentClass).map((k) => [
+  k,
+  StudentClass[k as never],
+]) as [keyof typeof StudentClass, StudentClass][];
+
 export enum StudentDivision {
   A = 'A',
   B = 'B',
@@ -35,6 +40,10 @@ export enum StudentDivision {
   D = 'D',
   E = 'E',
 }
+export const StudentDivisionOptions = Object.keys(StudentDivision).map((k) => [
+  k,
+  StudentDivision[k as never],
+]) as [keyof typeof StudentDivision, StudentDivision][];
 
 export class StudentRequest {
   @Length(3, 20)
@@ -47,7 +56,7 @@ export class StudentRequest {
   lastName: string;
 
   @IsEnum(StudentClass)
-  class: number;
+  class: string;
 
   @IsEnum(StudentDivision)
   division: string;

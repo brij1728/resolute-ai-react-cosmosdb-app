@@ -1,18 +1,23 @@
 // import * as yup from 'yup';
 
 import { Box, Button, Stack, TextField } from '@mui/material';
-import { Field, Form, Formik, FormikHelpers, FormikValues } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import {
+  StudentClassOptions,
+  StudentDivisionOptions,
+  StudentRequest,
+} from '@resolute-ai-react-cosmosdb-app/api-interfaces';
 
-import { StudentRequest } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
-import { __values } from 'tslib';
+import { SelectInput } from '../../atoms/SelectInput';
+import { createValidator } from 'class-validator-formik';
 
 export const StudentForm = () => {
-  const intialValues = {
-    firstName: '',
+  const intialValues: StudentRequest = {
+    firstName: 'Brijesh',
     middleName: '',
     lastName: '',
-    class: 2,
-    division: '',
+    class: 'Class 2',
+    division: 'E',
     rollNumber: 53,
     addressLineOne: '',
     addressLineTwo: '',
@@ -21,7 +26,6 @@ export const StudentForm = () => {
     pinCode: '',
   };
 
-  const validationSchema = {};
   return (
     <Formik
       initialValues={intialValues}
@@ -32,8 +36,9 @@ export const StudentForm = () => {
         alert('Form is validated! Submitting the form...');
         setSubmitting(false);
       }}
+      validate={createValidator(StudentRequest)}
     >
-      {() => (
+      {({ errors, touched, values }) => (
         <Form>
           <Box sx={{ paddingTop: 5, paddingRight: 3 }}>
             <Stack direction="row" spacing={2}>
@@ -45,8 +50,12 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="First Name"
+                value={values.firstName}
                 fullWidth
+                error={errors.firstName && touched.firstName}
+                helperText={errors.middleName || ''}
               />
+
               <Field
                 name="middleName"
                 type="text"
@@ -55,7 +64,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Middle Name"
+                value={values.middleName}
                 fullWidth
+                error={errors.middleName && touched.middleName}
+                helperText={errors.middleName || ''}
               />
               <Field
                 name="lastName"
@@ -65,7 +77,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Last Name"
+                value={values.lastName}
                 fullWidth
+                error={errors.lastName && touched.lastName}
+                helperText={errors.lastName || ''}
               />
             </Stack>
             <Box height={14} />
@@ -75,21 +90,29 @@ export const StudentForm = () => {
                 name="class"
                 type="text"
                 placeholder="Select Class"
-                as={TextField}
+                as={SelectInput}
+                options={StudentClassOptions}
                 variant="outlined"
                 color="primary"
                 label="Class"
+                value={values.class}
                 fullWidth
+                error={errors.class && touched.class}
+                helperText={errors.class || ''}
               />
               <Field
                 name="division"
                 type="text"
                 placeholder="Select Division"
-                as={TextField}
+                as={SelectInput}
+                options={StudentDivisionOptions}
                 variant="outlined"
                 color="primary"
                 label="Division"
+                value={values.division}
                 fullWidth
+                error={errors.division && touched.division}
+                helperText={errors.division || ''}
               />
               <Field
                 name="rollNumber"
@@ -99,7 +122,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Roll Number"
+                vlaue={values.rollNumber}
                 fullWidth
+                error={errors.rollNumber && touched.rollNumber}
+                helperText={errors.rollNumber || ''}
               />
             </Stack>
             <Box height={14} />
@@ -112,7 +138,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Address Line One "
+                value={values.addressLineOne}
                 fullWidth
+                error={errors.addressLineOne && touched.addressLineOne}
+                helperText={errors.addressLineOne || ''}
               />
               <Field
                 name="addressLineTwo"
@@ -122,7 +151,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Address Line Two "
+                value={values.addressLineTwo}
                 fullWidth
+                error={errors.addressLineTwo && touched.addressLineTwo}
+                helperText={errors.addressLineTwo || ''}
               />
             </Stack>
             <Box height={14} />
@@ -136,7 +168,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Landmark"
+                value={values.landmark}
                 fullWidth
+                error={errors.landmark && touched.landmark}
+                helperText={errors.landmark || ''}
               />
               <Field
                 name="city"
@@ -146,7 +181,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="City"
+                value={values.city}
                 fullWidth
+                error={errors.city && touched.city}
+                helperText={errors.city || ''}
               />
               <Field
                 name="pinCode"
@@ -156,7 +194,10 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Pincode"
+                value={values.pinCode}
                 fullWidth
+                error={errors.pinCode && touched.pinCode}
+                helperText={errors.pinCode || ''}
               />
             </Stack>
             <Box height={14} />
