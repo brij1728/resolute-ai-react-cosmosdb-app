@@ -4,7 +4,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   SelectProps,
 } from '@mui/material';
 

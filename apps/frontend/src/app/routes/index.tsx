@@ -4,8 +4,19 @@ import { Box, CssBaseline, Grid } from '@mui/material';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { StudentForm } from '../components/organism/StudentForm';
+import { StudentRequest } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
 
 export const RouteComponent = () => {
+  const onStudentSave = async (values: StudentRequest) => {
+    await fetch('/api/students', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+  };
+
   return (
     <>
       <CssBaseline />
@@ -33,7 +44,7 @@ export const RouteComponent = () => {
               <SideBar />
             </Grid>
             <Grid item xs={10} spacing={2}>
-              <StudentForm />
+              <StudentForm onSave={onStudentSave} />
             </Grid>
           </Grid>
         </Grid>

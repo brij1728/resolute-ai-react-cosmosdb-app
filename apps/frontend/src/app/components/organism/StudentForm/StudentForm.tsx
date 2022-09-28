@@ -1,8 +1,6 @@
-// import * as yup from 'yup';
-
 import { createValidator } from 'class-validator-formik';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { useCallback } from 'react';
+import { useState } from 'react';
 
 import { Box, Button, Stack, TextField } from '@mui/material';
 import {
@@ -13,33 +11,40 @@ import {
 
 import { SelectInput } from '../../atoms/SelectInput';
 
-export const StudentForm = () => {
-  const intialValues: StudentRequest = {
-    firstName: 'Brijesh',
-    middleName: '',
-    lastName: '',
-    class: 'Class 2',
-    division: 'E',
-    rollNumber: 53,
-    addressLineOne: '',
-    addressLineTwo: '',
-    landmark: '',
-    city: '',
-    pinCode: '',
-  };
+export type StudentFormProps = {
+  onSave: (values: StudentRequest) => Promise<void>;
+  initialValues?: StudentRequest;
+};
 
-  const saveStudent = useCallback(async (updatedStudent: StudentRequest) => {
-    console.log(updatedStudent);
-  }, []);
+export const StudentForm = ({
+  onSave,
+  initialValues: _initialValues,
+}: StudentFormProps) => {
+  const initialValues = useState<StudentRequest>(
+    _initialValues ||
+      ({
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        class: '',
+        division: '',
+        rollNumber: '',
+        addressLineOne: '',
+        addressLineTwo: '',
+        landmark: '',
+        city: '',
+        pinCode: '',
+      } as unknown as StudentRequest)
+  )[0];
 
   return (
     <Formik
-      initialValues={intialValues}
+      initialValues={initialValues}
       onSubmit={async (
         values: StudentRequest,
         formikHelpers: FormikHelpers<StudentRequest>
       ) => {
-        await saveStudent(values);
+        await onSave(values);
         formikHelpers.resetForm();
       }}
       validate={createValidator(StudentRequest)}
@@ -117,7 +122,7 @@ export const StudentForm = () => {
               />
               <Field
                 name="rollNumber"
-                type="text"
+                type="number"
                 placeholder="Enter Roll Number in Digits"
                 as={TextField}
                 variant="outlined"
