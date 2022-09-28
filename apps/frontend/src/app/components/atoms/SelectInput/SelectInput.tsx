@@ -2,40 +2,38 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
+  MenuItem,
   Select,
   SelectChangeEvent,
+  SelectProps,
 } from '@mui/material';
 
-export interface IProps {
-  value: string;
-  handleChange: (event: SelectChangeEvent) => void;
+export interface IProps extends SelectProps {
   options: [string, string][];
-  label: string;
   error?: boolean;
   helperText?: string;
 }
 
 export const SelectInput = ({
-  value,
   options,
-  label,
-  handleChange,
   error,
+  label,
   helperText,
+  fullWidth,
+  ...props
 }: IProps) => {
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} error={error}>
+    <FormControl
+      sx={{ m: 1, minWidth: 120 }}
+      error={error}
+      fullWidth={fullWidth}
+    >
       <InputLabel>{label}</InputLabel>
-      <Select
-        id="demo-simple-select-error"
-        value={value}
-        label={label}
-        onChange={(e) => handleChange}
-      >
+      <Select id="demo-simple-select-error" label={label} {...props}>
         {options.map(([k, v]) => (
-          <option key={k} value={v}>
+          <MenuItem key={k} value={v}>
             {v}
-          </option>
+          </MenuItem>
         ))}
       </Select>
       {helperText?.trim() && <FormHelperText>{helperText}</FormHelperText>}

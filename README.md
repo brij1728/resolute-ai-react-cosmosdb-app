@@ -2,14 +2,14 @@
 
 This project was generated using [Nx](https://nx.dev).
 
-
-## Frontend 
-
+## Frontend
 
 A react app build using React, MUI, and React Router.
 
-## Backend 
+## Backend
+
 Use Azure Cosmos DB. Test API with Postman.
+
 ## Adding capabilities to your workspace
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.
