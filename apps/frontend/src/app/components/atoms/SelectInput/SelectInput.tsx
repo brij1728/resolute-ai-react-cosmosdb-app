@@ -30,7 +30,7 @@ export const SelectInput = ({
         id="demo-simple-select-error"
         value={value}
         label={label}
-        onChange={handleChange}
+        onChange={(e) => handleChange}
       >
         {options.map(([k, v]) => (
           <option key={k} value={v}>

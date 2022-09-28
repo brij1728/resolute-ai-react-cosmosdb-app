@@ -1,6 +1,7 @@
 // import * as yup from 'yup';
 
 import { Box, Button, Stack, TextField } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import {
   StudentClassOptions,
@@ -26,19 +27,25 @@ export const StudentForm = () => {
     pinCode: '',
   };
 
+  const [form, setForm] = useState<StudentRequest>(new StudentRequest());
+
+  const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setForm(StudentRequest[e.target.value as keyof typeof StudentRequest]);
+  };
+
   return (
     <Formik
       initialValues={intialValues}
       onSubmit={(
         values: StudentRequest,
-        { setSubmitting }: FormikHelpers<StudentRequest>
+        formikHelpers: FormikHelpers<StudentRequest>
       ) => {
-        alert('Form is validated! Submitting the form...');
-        setSubmitting(false);
+        console.log(values);
+        formikHelpers.resetForm();
       }}
       validate={createValidator(StudentRequest)}
     >
-      {({ errors, touched, values }) => (
+      {({ errors, touched }) => (
         <Form>
           <Box sx={{ paddingTop: 5, paddingRight: 3 }}>
             <Stack direction="row" spacing={2}>
@@ -50,7 +57,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="First Name"
-                value={values.firstName}
+                value={form.firstName}
                 fullWidth
                 error={errors.firstName && touched.firstName}
                 helperText={errors.middleName || ''}
@@ -64,7 +71,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Middle Name"
-                value={values.middleName}
+                value={form.middleName}
                 fullWidth
                 error={errors.middleName && touched.middleName}
                 helperText={errors.middleName || ''}
@@ -77,7 +84,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Last Name"
-                value={values.lastName}
+                value={form.lastName}
                 fullWidth
                 error={errors.lastName && touched.lastName}
                 helperText={errors.lastName || ''}
@@ -92,10 +99,11 @@ export const StudentForm = () => {
                 placeholder="Select Class"
                 as={SelectInput}
                 options={StudentClassOptions}
+                handleChange={inputChange}
                 variant="outlined"
                 color="primary"
                 label="Class"
-                value={values.class}
+                value={form.class}
                 fullWidth
                 error={errors.class && touched.class}
                 helperText={errors.class || ''}
@@ -109,7 +117,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Division"
-                value={values.division}
+                value={form.division}
                 fullWidth
                 error={errors.division && touched.division}
                 helperText={errors.division || ''}
@@ -122,7 +130,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Roll Number"
-                vlaue={values.rollNumber}
+                vlaue={form.rollNumber}
                 fullWidth
                 error={errors.rollNumber && touched.rollNumber}
                 helperText={errors.rollNumber || ''}
@@ -138,7 +146,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Address Line One "
-                value={values.addressLineOne}
+                value={form.addressLineOne}
                 fullWidth
                 error={errors.addressLineOne && touched.addressLineOne}
                 helperText={errors.addressLineOne || ''}
@@ -151,7 +159,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Address Line Two "
-                value={values.addressLineTwo}
+                value={form.addressLineTwo}
                 fullWidth
                 error={errors.addressLineTwo && touched.addressLineTwo}
                 helperText={errors.addressLineTwo || ''}
@@ -168,7 +176,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Landmark"
-                value={values.landmark}
+                value={form.landmark}
                 fullWidth
                 error={errors.landmark && touched.landmark}
                 helperText={errors.landmark || ''}
@@ -181,7 +189,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="City"
-                value={values.city}
+                value={form.city}
                 fullWidth
                 error={errors.city && touched.city}
                 helperText={errors.city || ''}
@@ -194,7 +202,7 @@ export const StudentForm = () => {
                 variant="outlined"
                 color="primary"
                 label="Pincode"
-                value={values.pinCode}
+                value={form.pinCode}
                 fullWidth
                 error={errors.pinCode && touched.pinCode}
                 helperText={errors.pinCode || ''}
