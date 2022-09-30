@@ -1,5 +1,7 @@
+import { SideBar, StudentForm } from '../../components';
+
+import { Grid } from '@mui/material';
 import React from 'react';
-import { StudentForm } from '../../components';
 import { StudentRequest } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
 
 export const AddStudentPage = () => {
@@ -12,5 +14,14 @@ export const AddStudentPage = () => {
       body: JSON.stringify(values),
     });
   };
-  return <StudentForm onSave={onStudentSave} />;
+  return (
+    <Grid container direction="column" xs={12} spacing={2} alignItems="stretch">
+      <Grid item>
+        <SideBar />
+      </Grid>
+      <Grid item xs={10} spacing={2}>
+        <StudentForm onSave={onStudentSave} />;
+      </Grid>
+    </Grid>
+  );
 };
