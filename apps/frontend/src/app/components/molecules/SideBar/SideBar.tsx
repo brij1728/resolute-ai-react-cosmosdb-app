@@ -1,4 +1,11 @@
-import { Box, Stack } from '@mui/material';
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 
 import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import { IconButton } from '../../atoms';
@@ -6,32 +13,38 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import { useNavigate } from 'react-router-dom';
 
-export const SideBar = () => {
+export const SideBar = ({ width = 200 }) => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ paddingLeft: 3, paddingTop: 5, paddingRight: 3 }}>
-      <Stack>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <IconButton
-            buttonName={'Add Student'}
-            buttonIcon={<PeopleAltOutlinedIcon />}
-            onClick={() => navigate('/addStudent')}
-          />
-
+    <Box
+      sx={{ width, padding: 1, height: '100%', borderRight: 1, marginRight: 1 }}
+    >
+      <List>
+        <ListItem
+          sx={{ cursor: 'pointer' }}
+          onClick={() => navigate('/addStudent')}
+        >
+          <ListItemIcon>
+            <PeopleAltOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add Student" />
+        </ListItem>
+        <ListItem>
           <IconButton
             buttonName={'Manage Students'}
             buttonIcon={<BallotOutlinedIcon />}
             onClick={() => navigate('/manageStudent')}
           />
-
+        </ListItem>
+        <ListItem>
           <IconButton
             buttonName={'Logout'}
             buttonIcon={<LogoutOutlinedIcon />}
             onClick={() => navigate('/logout')}
           />
-        </Box>
-      </Stack>
+        </ListItem>
+      </List>
     </Box>
   );
 };

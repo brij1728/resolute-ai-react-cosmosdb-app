@@ -14,28 +14,27 @@ import { SelectInput } from '../../atoms/SelectInput';
 export type StudentFormProps = {
   onSave: (values: StudentRequest) => Promise<void>;
   initialValues?: StudentRequest;
+  disabled?: boolean;
 };
 
 export const StudentForm = ({
   onSave,
   initialValues: _initialValues,
+  disabled = false,
 }: StudentFormProps) => {
-  const initialValues = useState<StudentRequest>(
-    _initialValues ||
-      ({
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        class: '',
-        division: '',
-        rollNumber: '',
-        addressLineOne: '',
-        addressLineTwo: '',
-        landmark: '',
-        city: '',
-        pinCode: '',
-      } as unknown as StudentRequest)
-  )[0];
+  const initialValues = useState<StudentRequest>({
+    firstName: _initialValues?.firstName ?? '',
+    middleName: _initialValues?.middleName ?? '',
+    lastName: _initialValues?.lastName ?? '',
+    class: _initialValues?.class ?? '',
+    division: _initialValues?.division ?? '',
+    rollNumber: _initialValues?.rollNumber ?? '',
+    addressLineOne: _initialValues?.addressLineOne ?? '',
+    addressLineTwo: _initialValues?.addressLineTwo ?? '',
+    landmark: _initialValues?.landmark ?? '',
+    city: _initialValues?.city ?? '',
+    pinCode: _initialValues?.pinCode ?? '',
+  } as unknown as StudentRequest)[0];
 
   return (
     <Formik
@@ -48,6 +47,7 @@ export const StudentForm = ({
         formikHelpers.resetForm();
       }}
       validate={createValidator(StudentRequest)}
+      disabled={disabled}
     >
       {({ errors, touched }) => (
         <Form>
@@ -55,6 +55,7 @@ export const StudentForm = ({
             <Stack direction="row" spacing={2}>
               <Field
                 name="firstName"
+                disabled={disabled}
                 type="text"
                 placeholder="First Name"
                 as={TextField}
@@ -68,6 +69,7 @@ export const StudentForm = ({
 
               <Field
                 name="middleName"
+                disabled={disabled}
                 type="text"
                 placeholder="Middle Name"
                 as={TextField}
@@ -80,6 +82,7 @@ export const StudentForm = ({
               />
               <Field
                 name="lastName"
+                disabled={disabled}
                 type="text"
                 placeholder="Last Name"
                 as={TextField}
@@ -96,6 +99,7 @@ export const StudentForm = ({
             <Stack direction="row" spacing={2}>
               <Field
                 name="class"
+                disabled={disabled}
                 type="text"
                 placeholder="Select Class"
                 as={SelectInput}
@@ -109,6 +113,7 @@ export const StudentForm = ({
               />
               <Field
                 name="division"
+                disabled={disabled}
                 type="text"
                 placeholder="Select Division"
                 as={SelectInput}
@@ -122,6 +127,7 @@ export const StudentForm = ({
               />
               <Field
                 name="rollNumber"
+                disabled={disabled}
                 type="number"
                 placeholder="Enter Roll Number in Digits"
                 as={TextField}
@@ -137,6 +143,7 @@ export const StudentForm = ({
             <Stack direction="row" spacing={2}>
               <Field
                 name="addressLineOne"
+                disabled={disabled}
                 type="text"
                 placeholder="Address Line One"
                 as={TextField}
@@ -149,6 +156,7 @@ export const StudentForm = ({
               />
               <Field
                 name="addressLineTwo"
+                disabled={disabled}
                 type="text"
                 placeholder="Address Line Two"
                 as={TextField}
@@ -165,6 +173,7 @@ export const StudentForm = ({
             <Stack direction="row" spacing={2}>
               <Field
                 name="landmark"
+                disabled={disabled}
                 type="text"
                 placeholder="Landmark"
                 as={TextField}
@@ -177,6 +186,7 @@ export const StudentForm = ({
               />
               <Field
                 name="city"
+                disabled={disabled}
                 type="text"
                 placeholder="City"
                 as={TextField}
@@ -189,6 +199,7 @@ export const StudentForm = ({
               />
               <Field
                 name="pinCode"
+                disabled={disabled}
                 type="number"
                 placeholder="Pincode"
                 as={TextField}
@@ -207,8 +218,9 @@ export const StudentForm = ({
               variant="contained"
               color="secondary"
               size="large"
+              disabled={disabled}
             >
-              Add Student
+              Save
             </Button>
           </Box>
         </Form>

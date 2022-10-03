@@ -1,8 +1,12 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
+import { DataGrid, GridApi, GridCellValue, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 
-import { DataGrid } from '@mui/x-data-grid';
+import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { Student } from '@resolute-ai-react-cosmosdb-app/api-interfaces';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { useNavigate } from 'react-router-dom';
 
 export const StudentListView = () => {
   // const updateStudent = () => {
@@ -10,17 +14,38 @@ export const StudentListView = () => {
   // }
   const [students, setStudents] = useState<Student[]>([]);
 
-  const VISIBLE_FIELDS: Array<keyof Student> = [
-    'firstName',
-    'lastName',
-    'class',
-    'division',
-  ];
+  const navigate = useNavigate();
 
-  const cols = [
+  const cols: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'class', headerName: 'Class', flex: 1 },
     { field: 'rollNumber', headerName: 'Roll No.', flex: 1 },
+    {
+      field: 'action',
+      headerName: 'Edit/ View/ Delete',
+      sortable: false,
+      width: 200,
+      renderCell: (params) => {
+        const student = params.row as Student;
+        const onClick = () => {
+          return alert(JSON.stringify(student, null, 4));
+        };
+
+        return (
+          <Box>
+            <Button onClick={() => navigate(`/student/${student.id}`)}>
+              <BorderColorOutlinedIcon />
+            </Button>
+            <Button onClick={onClick}>
+              <DeleteOutlinedIcon />
+            </Button>
+            <Button onClick={onClick}>
+              <VisibilityOutlinedIcon />
+            </Button>
+          </Box>
+        );
+      },
+    },
   ];
 
   const rowData = students.map((student) => {
@@ -42,17 +67,6 @@ export const StudentListView = () => {
 
   return (
     <Grid container>
-      {/* <Grid item>
-        <Box display="flex" p={1} flexGrow={1}>
-          <Box p={1} alignItems="flex-start">
-            Manage Students
-          </Box>
-          <Box
-            p={1}
-            alignItems="flex-end"
-          >{`${new Date().toLocaleString()}`}</Box>
-        </Box>
-      </Grid> */}
       <Grid container alignItems="center" justify-content="space-around">
         <Grid>Manage Students</Grid>
         <Grid>{`${new Date().toLocaleString()}`}</Grid>
