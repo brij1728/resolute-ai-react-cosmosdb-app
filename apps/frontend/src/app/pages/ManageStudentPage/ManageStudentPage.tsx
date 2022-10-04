@@ -1,7 +1,5 @@
-import { SideBar, StudentListView } from '../../components';
-
 import { Grid } from '@mui/material';
-import React from 'react';
+import { StudentListView } from '../../components';
 
 export const ManageStudentPage = () => {
   return (

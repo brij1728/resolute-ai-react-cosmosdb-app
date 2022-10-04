@@ -1,4 +1,9 @@
-import { AddStudentPage, ManageStudentPage, ViewStudentPage } from '../pages';
+import {
+  AddStudentPage,
+  EditStudentPage,
+  ManageStudentPage,
+  ViewStudentPage,
+} from '../pages';
 import { AppBar, SideBar } from '../components';
 import { Box, CssBaseline } from '@mui/material';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -42,7 +47,9 @@ export const RouteComponent = () => {
             <Routes>
               <Route path="/addStudent" element={<AddStudentPage />} />
               <Route path="/manageStudent" element={<ManageStudentPage />} />
-              <Route path="/student/:id" element={<ViewStudentPage />} />
+              <Route path="/student/view/:id" element={<ViewStudentPage />} />
+              <Route path="/student/edit/:id" element={<EditStudentPage />} />
+
               <Route
                 path="*"
                 element={<Navigate to="/manageStudent" replace />}

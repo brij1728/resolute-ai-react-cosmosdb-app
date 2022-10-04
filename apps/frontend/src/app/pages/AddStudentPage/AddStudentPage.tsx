@@ -19,7 +19,7 @@ export const AddStudentPage = () => {
       <Grid item>
         <Box display="flex" p={1} flexGrow={1}>
           <Box p={1} alignItems="flex-start">
-            Manage Students
+            Add Students
           </Box>
           <Box
             p={1}
@@ -27,10 +27,8 @@ export const AddStudentPage = () => {
           >{`${new Date().toLocaleString()}`}</Box>
         </Box>
       </Grid>
-      <Grid container direction="column" xs={12} spacing={2}>
-        <Grid item xs={10} spacing={2}>
-          <StudentForm onSave={onStudentSave} />;
-        </Grid>
+      <Grid item xs={12}>
+        <StudentForm onSave={onStudentSave} />;
       </Grid>
     </Grid>
   );

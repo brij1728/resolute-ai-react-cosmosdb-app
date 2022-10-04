@@ -1,5 +1,5 @@
 import { Box, Button, Grid } from '@mui/material';
-import { DataGrid, GridApi, GridCellValue, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
@@ -9,9 +9,6 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from 'react-router-dom';
 
 export const StudentListView = () => {
-  // const updateStudent = () => {
-
-  // }
   const [students, setStudents] = useState<Student[]>([]);
 
   const navigate = useNavigate();
@@ -33,14 +30,14 @@ export const StudentListView = () => {
 
         return (
           <Box>
-            <Button onClick={() => navigate(`/student/${student.id}`)}>
+            <Button onClick={() => navigate(`/student/view/${student.id}`)}>
+              <VisibilityOutlinedIcon />
+            </Button>
+            <Button onClick={() => navigate(`/student/edit/${student.id}`)}>
               <BorderColorOutlinedIcon />
             </Button>
             <Button onClick={onClick}>
               <DeleteOutlinedIcon />
-            </Button>
-            <Button onClick={onClick}>
-              <VisibilityOutlinedIcon />
             </Button>
           </Box>
         );

@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { StudentForm } from '../../components';
 import { useParams } from 'react-router-dom';
 
-export const ViewStudentPage = () => {
+export const EditStudentPage = () => {
   const { id } = useParams();
 
   const [student, setStudent] = useState<Student | null>(null);
@@ -44,7 +44,6 @@ export const ViewStudentPage = () => {
 
   return (
     <StudentForm
-      disabled
       initialValues={student}
       onSave={(data) => onSubmit(student.id, data)}
     />

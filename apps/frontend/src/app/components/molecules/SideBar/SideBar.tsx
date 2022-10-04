@@ -1,11 +1,4 @@
-import {
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
+import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 
 import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import { IconButton } from '../../atoms';
@@ -30,19 +23,17 @@ export const SideBar = ({ width = 200 }) => {
           </ListItemIcon>
           <ListItemText primary="Add Student" />
         </ListItem>
-        <ListItem>
-          <IconButton
-            buttonName={'Manage Students'}
-            buttonIcon={<BallotOutlinedIcon />}
-            onClick={() => navigate('/manageStudent')}
-          />
+        <ListItem onClick={() => navigate('/manageStudent')}>
+          <ListItemIcon>
+            <BallotOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Manage Students" />
         </ListItem>
-        <ListItem>
-          <IconButton
-            buttonName={'Logout'}
-            buttonIcon={<LogoutOutlinedIcon />}
-            onClick={() => navigate('/logout')}
-          />
+        <ListItem onClick={() => navigate('/logout')}>
+          <ListItemIcon>
+            <LogoutOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
         </ListItem>
       </List>
     </Box>
